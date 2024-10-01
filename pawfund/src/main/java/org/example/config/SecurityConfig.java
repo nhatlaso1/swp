@@ -1,5 +1,6 @@
 package org.example.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.utils.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/login").permitAll()
-                        .requestMatchers("/api/logout").permitAll()
+                        .requestMatchers("/api/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -61,3 +62,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

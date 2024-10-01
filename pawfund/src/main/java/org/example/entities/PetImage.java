@@ -11,8 +11,6 @@ public class PetImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "pet_id")
-    private String petId;
     @Column(name = "image_url")
     private String imageUrl;
     @Column(name = "create_at")
