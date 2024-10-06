@@ -3,6 +3,7 @@ package org.example.services.impl;
 import org.example.data.request.CreateAdoptionRequest;
 import org.example.data.request.FilterPetRequest;
 import org.example.data.request.UpdateAdoptionRequest;
+import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.FilterPetResponse;
 import org.example.data.response.PaginationVO;
 import org.example.entities.Adoption;
@@ -104,6 +105,11 @@ public class PetServiceImpl implements IPetService {
     @Override
     public int update(UpdateAdoptionRequest request) {
         return 0;
+    }
+
+    @Override
+    public PaginationVO<AdoptHistoryResponse> history() {
+        return null;
     }
 
 

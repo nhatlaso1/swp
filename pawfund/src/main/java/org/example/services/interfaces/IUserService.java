@@ -10,5 +10,4 @@ public interface IUserService {
     int register(RegisterRequest request);
     ProfileResponse profile();
     int changePassword(ChangePasswordRequest request);
-    int changePassword(ChangePasswordRequest request);
 }
