@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.data.request.CreateAdoptionRequest;
 import org.example.data.request.FilterPetRequest;
 import org.example.data.response.FilterPetResponse;
 import org.example.data.response.PaginationVO;
@@ -28,4 +29,5 @@ public class PetController {
         ResponseData<PaginationVO<FilterPetResponse>> responseData = new ResponseData<>("FILTER_PET_SUCCESS", "Filter pet successful", responsePaginationVO);
         return ResponseEntity.ok(responseData);
     }
+
 }

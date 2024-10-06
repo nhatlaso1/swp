@@ -23,4 +23,60 @@ public class Adoption {
     private int status;
     @Column(name = "adoption_date")
     private String adoptionDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public User getAdopterId() {
+        return adopterId;
+    }
+
+    public void setAdopterId(User adopterId) {
+        this.adopterId = adopterId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getAdoptionDate() {
+        return adoptionDate;
+    }
+
+    public void setAdoptionDate(String adoptionDate) {
+        this.adoptionDate = adoptionDate;
+    }
 }

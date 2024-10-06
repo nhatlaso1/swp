@@ -13,10 +13,30 @@ public class PetImage {
 
     @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "create_at")
-    private String createAt;
 
     @ManyToOne
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
+
+    @Column(name = "create")
+    private Long create;
+
+    public PetImage() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
 }

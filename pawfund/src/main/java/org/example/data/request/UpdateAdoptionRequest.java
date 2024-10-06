@@ -5,18 +5,47 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CreateAdoptionRequest {
+public class UpdateAdoptionRequest {
+    private int adoptId;
+    private int petId;
     private int type;
-    private String name;
+    private List<String> images;
     private int age;
     private String title;
-    private List<String> imageUrl;
     private String description;
     private String address;
     private String breed;
 
+    public int getAdoptId() {
+        return adoptId;
+    }
+
+    public void setAdoptId(int adoptId) {
+        this.adoptId = adoptId;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
+
     public int getType() {
         return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public int getAge() {
@@ -27,32 +56,12 @@ public class CreateAdoptionRequest {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getDescription() {

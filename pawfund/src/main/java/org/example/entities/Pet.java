@@ -1,6 +1,7 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
@@ -33,4 +34,11 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PetImage> images;
+
+    public Pet(String name, int age, String breed, String status) {
+        this.name = name;
+        this.age = age;
+        this.breed = breed;
+        this.status = status;
+    }
 }
