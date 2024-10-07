@@ -82,4 +82,35 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>2.6.0</version>
+                <configuration>
+                    <resourceGroup>petfund</resourceGroup>
+                    <appName>petfundpro</appName>
+                    <region>southeastasia</region>
+                    <runtime>
+                        <os>linux</os>
+                        <javaVersion>JAVA_17</javaVersion>
+                        <webContainer>JAVA_SE</webContainer>
+                    </runtime>
+                    <deployment>
+                        <resources>
+                            <resource>
+                                <directory>${project.basedir}/target</directory>
+                                <includes>
+                                    <include>*.jar</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                    </deployment>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
