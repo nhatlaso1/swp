@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - pawfund
+name: Build and deploy JAR app to Azure Web App - petfund
 
 on:
   push:
@@ -49,15 +49,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3967480FF9874382A318CE6A7900ED31 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C1C6F80A21DC48B19BCF5CC89030DBE0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_33A7B767C6334C16B4FAA7768C74C3A9 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7FB7A676B7BE47DA9AF2BB084F544BFD }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_106FF59B93EE4D198FD16DA5908DE781 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6C9C05F5719D426BBFEDC83654BF119E }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'pawfund'
+          app-name: 'petfund'
           slot-name: 'Production'
           package: '*.jar'
           
