@@ -6,10 +6,7 @@ import org.example.data.request.UpdateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.FilterPetResponse;
 import org.example.data.response.PaginationVO;
-import org.example.entities.Adoption;
-import org.example.entities.Pet;
-import org.example.entities.PetImage;
-import org.example.entities.User;
+import org.example.entities.*;
 import org.example.model.FilterPetVO;
 import org.example.repositories.AdoptionRepository;
 import org.example.repositories.PetImageRepository;
@@ -104,13 +101,35 @@ public class PetServiceImpl implements IPetService {
 
     @Override
     public int update(UpdateAdoptionRequest request) {
-        return 0;
+        Adoption existingAdoption = adoptionRepository.findById(request.getAdoptId())
+                .orElseThrow(() -> new RuntimeException("Adoption not found with ID: " + request.getAdoptId()));
+
+        Pet pet = null;
+        if (request.getPetId() != 0) {
+            pet = petRepository.findById(request.getPetId())
+                    .orElseThrow(() -> new RuntimeException("Pet not found with ID: " + request.getPetId()));
+
+            pet.setAge(request.getAge());
+            pet.setBreed(request.getBreed());
+            pet.setPetType(new PetType(request.getType()));
+            pet.setDescription(request.getDescription());
+
+            existingAdoption.setPet(pet);
+        }
+
+        existingAdoption.setTitle(request.getTitle());
+        existingAdoption.setType(request.getType());
+        existingAdoption.setPet(pet);
+
+        adoptionRepository.save(existingAdoption);
+
+        return 1;
     }
 
     @Override
-    public PaginationVO<AdoptHistoryResponse> history() {
-        return null;
+    public int delete(int adoptId) {
+        adoptionRepository.deleteById(adoptId);
+        return 0;
     }
-
 
 }

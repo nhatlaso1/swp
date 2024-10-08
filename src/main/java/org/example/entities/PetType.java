@@ -13,4 +13,8 @@ public class PetType {
 
     @Column(name = "name")
     private String name;
+
+    public PetType(int id) {
+        this.id = id;
+    }
 }
