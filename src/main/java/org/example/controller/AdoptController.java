@@ -6,6 +6,7 @@ import org.example.data.request.UpdateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.ResponseData;
+import org.example.data.response.ViewAdoptResponse;
 import org.example.services.interfaces.IAdoptService;
 import org.example.services.interfaces.IPetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,15 @@ public class AdoptController {
 
         ResponseData<String> responseData = new ResponseData<>("DELETE_ADOPT_SUCCESS",
                 "Delete pet adoption history successful", null);
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/public/adopt/view")
+    public ResponseEntity<ResponseData<ViewAdoptResponse>> view(@RequestParam int adoptId) {
+        ViewAdoptResponse response = adoptService.view(adoptId);
+
+        ResponseData<ViewAdoptResponse> responseData = new ResponseData<>("VIEW_ADOPT_SUCCESS",
+                "View pet adoption detail successful", response);
         return ResponseEntity.ok(responseData);
     }
 }
