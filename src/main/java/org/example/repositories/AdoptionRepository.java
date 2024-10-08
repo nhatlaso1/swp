@@ -2,7 +2,7 @@ package org.example.repositories;
 
 import org.example.entities.Adoption;
 import org.example.model.AdoptHistoryVO;
-import org.example.model.FilterPetVO;
+import org.example.model.ViewAdoptVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +28,26 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Integer> {
             @Param("pet_type_id") int petTypeId,
             @Param("age_from") int ageFrom,
             @Param("age_to") int ageTo
+    );
+
+    @Query(value = "SELECT \n" +
+            "    a.id AS id,\n" +
+            "    a.title AS title,\n" +
+            "    p.name AS petName,\n" +
+            "    pt.name AS petType,\n" +
+            "    p.age AS age,\n" +
+            "    p.address AS address,\n" +
+            "    u.full_name AS fullName,\n" +
+            "    a.type AS type,\n" +
+            "    GROUP_CONCAT(pi.image_url SEPARATOR '||') AS images\n" +
+            "FROM pets p\n" +
+            "JOIN adoptions a ON p.id = a.pet_id\n" +
+            "JOIN pet_type pt ON pt.id = p.pet_type_id\n" +
+            "JOIN users u ON u.id = a.adopter_id\n" +
+            "LEFT JOIN images pi ON pi.pet_id = p.id  \n" +
+            "WHERE a.id = ?1\n" +
+            "GROUP BY a.id, p.name, pt.name, p.age, p.address, u.full_name, a.type;\n\n", nativeQuery = true)
+    ViewAdoptVO view(
+        int adoptId
     );
 }
