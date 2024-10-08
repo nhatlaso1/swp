@@ -1,6 +1,9 @@
 package org.example.data.response;
 
 import lombok.Data;
+import org.example.model.AdoptHistoryVO;
+import org.example.model.FilterPetVO;
+import org.example.repositories.AdoptionRepository;
 
 @Data
 public class AdoptHistoryResponse {
@@ -84,5 +87,27 @@ public class AdoptHistoryResponse {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public AdoptHistoryResponse() {
+    }
+
+    public static AdoptHistoryResponse fromFilterPetVO(AdoptHistoryVO filterPetVO) {
+        AdoptHistoryResponse response = new AdoptHistoryResponse();
+        response.setId(filterPetVO.getId());
+        response.setTitle(filterPetVO.getTitle());
+        response.setPetName(filterPetVO.getPetName());
+        response.setPetType(filterPetVO.getPetType());
+        response.setAge(filterPetVO.getAge());
+        response.setAddress(filterPetVO.getAddress());
+        response.setFullName(filterPetVO.getFullName());
+        if(filterPetVO.getType() == "1"){
+            response.setType("Nhận nuôi");
+        } else{
+            response.setType("Đem cho");
+        }
+        response.setImage(filterPetVO.getImage());
+
+        return response;
     }
 }
