@@ -12,5 +12,5 @@ public interface IPetService {
     PaginationVO<FilterPetResponse> filter(FilterPetRequest request);
     int create(CreateAdoptionRequest request);
     int update(UpdateAdoptionRequest request);
-    PaginationVO<AdoptHistoryResponse> history();
+    int delete(int adoptId);
 }
