@@ -7,7 +7,6 @@ import java.util.List;
 @Data
 public class UpdateAdoptionRequest {
     private int adoptId;
-    private int petId;
     private int type;
     private List<String> images;
     private int age;
@@ -22,14 +21,6 @@ public class UpdateAdoptionRequest {
 
     public void setAdoptId(int adoptId) {
         this.adoptId = adoptId;
-    }
-
-    public int getPetId() {
-        return petId;
-    }
-
-    public void setPetId(int petId) {
-        this.petId = petId;
     }
 
     public int getType() {

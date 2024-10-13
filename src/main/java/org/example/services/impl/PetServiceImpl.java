@@ -110,9 +110,9 @@ public class PetServiceImpl implements IPetService {
                 .orElseThrow(() -> new RuntimeException("Adoption not found with ID: " + request.getAdoptId()));
 
         Pet pet = null;
-        if (request.getPetId() != 0) {
-            pet = petRepository.findById(request.getPetId())
-                    .orElseThrow(() -> new RuntimeException("Pet not found with ID: " + request.getPetId()));
+        if (existingAdoption.getPet().getId() != 0) {
+            pet = petRepository.findById(existingAdoption.getPet().getId())
+                    .orElseThrow(() -> new RuntimeException("Pet not found with ID: " + existingAdoption.getPet().getId()));
 
             pet.setAge(request.getAge());
             pet.setBreed(request.getBreed());
