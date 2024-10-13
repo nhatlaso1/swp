@@ -14,6 +14,15 @@ public class FilterPetResponse {
     private String fullName;
     private String type;
     private String image;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getImage() {
         return image;
@@ -96,6 +105,7 @@ public class FilterPetResponse {
         response.setAge(filterPetVO.getAge());
         response.setAddress(filterPetVO.getAddress());
         response.setFullName(filterPetVO.getFullName());
+        response.setStatus(filterPetVO.getStatus());
         if(filterPetVO.getType() == "1"){
             response.setType("Nhận nuôi");
         } else{

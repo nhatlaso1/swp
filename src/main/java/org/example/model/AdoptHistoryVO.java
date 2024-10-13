@@ -10,4 +10,5 @@ public interface AdoptHistoryVO {
     String getFullName();
     String getType();
     String getImage();
+    int getStatus();
 }
