@@ -2,8 +2,6 @@ package org.example.data.response;
 
 import lombok.Data;
 import org.example.model.AdoptHistoryVO;
-import org.example.model.FilterPetVO;
-import org.example.repositories.AdoptionRepository;
 
 @Data
 public class AdoptHistoryResponse {
@@ -16,6 +14,7 @@ public class AdoptHistoryResponse {
     private String fullName;
     private String type;
     private String image;
+    private int status;
 
     public int getId() {
         return id;
@@ -89,6 +88,14 @@ public class AdoptHistoryResponse {
         this.image = image;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public AdoptHistoryResponse() {
     }
 
@@ -101,6 +108,7 @@ public class AdoptHistoryResponse {
         response.setAge(filterPetVO.getAge());
         response.setAddress(filterPetVO.getAddress());
         response.setFullName(filterPetVO.getFullName());
+        response.setStatus(filterPetVO.getStatus());
         if(filterPetVO.getType() == "1"){
             response.setType("Nhận nuôi");
         } else{

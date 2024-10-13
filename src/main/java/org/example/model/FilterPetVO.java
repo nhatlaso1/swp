@@ -10,4 +10,5 @@ public interface FilterPetVO {
     String getFullName();
     String getType();
     String getImage();
+    int getStatus();
 }
