@@ -38,6 +38,9 @@ public class Pet {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PetImage> images;
 
+    public Pet() {
+    }
+
     public Pet(String name, PetType petType, int age, String breed, String status, String description, String address) {
         this.name = name;
         this.petType = petType;
