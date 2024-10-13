@@ -7,8 +7,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Component
 public class CommonUtils {
-    @Autowired
     private static JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    public void setJwtTokenProvider(JwtTokenProvider jwtTokenProvider) {
+        CommonUtils.jwtTokenProvider = jwtTokenProvider;
+    }
 
     public static String getCurrentUsername() {
         String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())

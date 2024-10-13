@@ -26,8 +26,8 @@ public class AdoptController {
     public ResponseEntity<ResponseData<String>> create(@RequestBody CreateAdoptionRequest request) {
         petService.create(request);
 
-        ResponseData<String> responseData = new ResponseData<>("FILTER_PET_SUCCESS",
-                "Filter pet successful", null);
+        ResponseData<String> responseData = new ResponseData<>("ADD_PET_ADOPT_SUCCESS",
+                "Add pet adoption successful", null);
         return ResponseEntity.ok(responseData);
     }
 

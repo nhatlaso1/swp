@@ -28,6 +28,9 @@ public class Pet {
     @Column(name = "created_at")
     private String createdAt;
 
+    @Column(name = "address")
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "pet_type_id", nullable = false)
     private PetType petType;
@@ -35,11 +38,22 @@ public class Pet {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PetImage> images;
 
-    public Pet(String name, int age, String breed, String status) {
+    public Pet(String name, PetType petType, int age, String breed, String status, String description, String address) {
         this.name = name;
+        this.petType = petType;
         this.age = age;
         this.breed = breed;
         this.status = status;
+        this.description = description;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getId() {

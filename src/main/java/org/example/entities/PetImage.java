@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "images")
+@Table(name = "pet_images")
 public class PetImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class PetImage {
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
 
-    @Column(name = "create")
-    private Long create;
+    @Column(name = "created_at")
+    private Long createAt;
 
     public PetImage() {
     }
@@ -38,5 +38,13 @@ public class PetImage {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public Long getCreate() {
+        return createAt;
+    }
+
+    public void setCreate(Long create) {
+        this.createAt = create;
     }
 }

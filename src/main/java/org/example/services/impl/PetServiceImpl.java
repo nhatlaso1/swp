@@ -68,9 +68,12 @@ public class PetServiceImpl implements IPetService {
     public int create(CreateAdoptionRequest request) {
         Pet newPet = new Pet(
                 request.getName(),
+                new PetType(request.getType()),
                 request.getAge(),
                 request.getBreed(),
-                "Pending"
+                "Pending",
+                request.getDescription(),
+                request.getAddress()
         );
 
         Pet savedPet = petRepository.save(newPet);
@@ -80,6 +83,7 @@ public class PetServiceImpl implements IPetService {
                 PetImage newPetImage = new PetImage();
                 newPetImage.setPet(savedPet);
                 newPetImage.setImageUrl(imageUrl);
+                newPetImage.setCreate(System.currentTimeMillis());
 
                 petImageRepository.save(newPetImage);
             }
@@ -93,6 +97,7 @@ public class PetServiceImpl implements IPetService {
         newAdoption.setPet(savedPet);
         newAdoption.setType(request.getType());
         newAdoption.setStatus(1);
+        newAdoption.setTitle(request.getTitle());
 
         adoptionRepository.save(newAdoption);
 
