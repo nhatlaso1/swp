@@ -6,10 +6,12 @@ import org.example.data.response.LoginResponse;
 import org.example.data.response.ResponseData;
 import org.example.services.interfaces.IUserService;
 import org.example.utils.JwtTokenProvider;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,26 +36,31 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseData<LoginResponse>> authenticate(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = tokenProvider.generateToken(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String token = tokenProvider.generateToken(authentication);
 
-        var roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .toList();
+            var roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList();
 
-        LoginResponse loginResponse = new LoginResponse(userDetails.getUsername(), roles.get(0), token);
-        ResponseData<LoginResponse> responseData = new ResponseData<>("LOGIN_SUCCESSFUL", "Login successful", loginResponse);
+            LoginResponse loginResponse = new LoginResponse(userDetails.getUsername(), roles.get(0), token);
+            ResponseData<LoginResponse> responseData = new ResponseData<>("LOGIN_SUCCESSFUL", "Login successful", loginResponse);
 
-        return ResponseEntity.ok(responseData);
+            return ResponseEntity.ok(responseData);
+        } catch (AuthenticationException e) {
+            ResponseData<LoginResponse> responseData = new ResponseData<>("LOGIN_FAILED", "Invalid username or password", null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseData);
+        }
     }
 
     @PostMapping("/logout")

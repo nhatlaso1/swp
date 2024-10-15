@@ -3,7 +3,9 @@ package org.example.services.impl;
 import org.example.data.request.ChangePasswordRequest;
 import org.example.data.request.RegisterRequest;
 import org.example.data.response.ProfileResponse;
+import org.example.entities.Role;
 import org.example.entities.User;
+import org.example.repositories.RoleRepository;
 import org.example.repositories.UserRepository;
 import org.example.services.interfaces.IUserService;
 import org.example.utils.CommonUtils;
@@ -18,6 +20,8 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public User findByUsername(String username) {
@@ -39,6 +43,8 @@ public class UserServiceImpl implements IUserService {
         newUser.setFullName(request.getName());
         newUser.setPhone(request.getPhone());
         newUser.setAddress(request.getAddress());
+        Role userRole = roleRepository.findById("USER").get();
+        newUser.setRole(userRole);
 
         userRepository.save(newUser);
         return 1;
