@@ -44,7 +44,7 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Integer> {
             "JOIN adoptions a ON p.id = a.pet_id\n" +
             "JOIN pet_type pt ON pt.id = p.pet_type_id\n" +
             "JOIN users u ON u.id = a.adopter_id\n" +
-            "LEFT JOIN images pi ON pi.pet_id = p.id  \n" +
+            "LEFT JOIN pet_images pi ON pi.pet_id = p.id  \n" +
             "WHERE a.id = ?1\n" +
             "GROUP BY a.id, p.name, pt.name, p.age, p.address, u.full_name, a.type;\n\n", nativeQuery = true)
     ViewAdoptVO view(
