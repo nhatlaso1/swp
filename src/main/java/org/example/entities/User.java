@@ -39,4 +39,7 @@ public class User {
     @Column(name = "created_at")
     private String createdAt;
 
+    @Column(name = "status")
+    private String status;
+
 }

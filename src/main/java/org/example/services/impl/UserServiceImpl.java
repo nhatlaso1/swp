@@ -1,7 +1,10 @@
 package org.example.services.impl;
 
 import org.example.data.request.ChangePasswordRequest;
+import org.example.data.request.ListUserRequest;
 import org.example.data.request.RegisterRequest;
+import org.example.data.response.ListUserResponse;
+import org.example.data.response.PaginationVO;
 import org.example.data.response.ProfileResponse;
 import org.example.entities.Role;
 import org.example.entities.User;
@@ -12,6 +15,9 @@ import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -43,6 +49,7 @@ public class UserServiceImpl implements IUserService {
         newUser.setFullName(request.getName());
         newUser.setPhone(request.getPhone());
         newUser.setAddress(request.getAddress());
+        newUser.setStatus("Active");
         Role userRole = roleRepository.findById("USER").get();
         newUser.setRole(userRole);
 
@@ -85,4 +92,32 @@ public class UserServiceImpl implements IUserService {
 
         return 1;
     }
+
+    @Override
+    public PaginationVO<ListUserResponse> list(ListUserRequest request) {
+        List<User> userList = userRepository.filter(
+                request.getName(),
+                request.getRole(),
+                request.getStatus(),
+                request.getPageSize(),
+                request.getPageNumber());
+
+        int count = userRepository.count(
+                request.getName(),
+                request.getRole(),
+                request.getStatus()
+        );
+
+        List<ListUserResponse> petResponses = userList.stream()
+                .map(ListUserResponse::fromUser)
+                .collect(Collectors.toList());
+
+        PaginationVO<ListUserResponse> responsePaginationVO = new PaginationVO<>(
+                count, petResponses
+        );
+
+        return responsePaginationVO;
+    }
+
+
 }

@@ -1,8 +1,9 @@
 package org.example.controller;
 
+import org.example.data.request.AdoptHistoryRequest;
 import org.example.data.request.ChangePasswordRequest;
-import org.example.data.response.ProfileResponse;
-import org.example.data.response.ResponseData;
+import org.example.data.request.ListUserRequest;
+import org.example.data.response.*;
 import org.example.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,15 @@ public class UserController {
 
         responseData = new ResponseData<>("CHANGE_PASSWORD_SUCCESS"
                 , "Change password successful.", null);
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<ResponseData<PaginationVO<ListUserResponse>>> list(@RequestBody ListUserRequest request) {
+        PaginationVO<ListUserResponse> responsePaginationVO =  userService.list(request);
+
+        ResponseData<PaginationVO<ListUserResponse>> responseData = new ResponseData<>("LIST_USER_SUCCESS",
+                "List user successful", responsePaginationVO);
         return ResponseEntity.ok(responseData);
     }
 
