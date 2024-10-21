@@ -1,9 +1,12 @@
 package org.example.repositories;
 
+import jakarta.transaction.Transactional;
 import org.example.entities.Volunteer;
 import org.example.model.VolunteerDetailVO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
     @Query(value = "SELECT u.email as email,\n" +
@@ -20,4 +23,10 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
             "        FROM volunteers v JOIN users u\n" +
             "ON v.user_id = u.id where user_id = ?", nativeQuery = true)
     VolunteerDetailVO findByUserId(int userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Volunteers v SET v.status = :status WHERE v.id = :id", nativeQuery = true)
+    void confirmStatus(@Param("status") String status, @Param("id") Integer id);
+
 }
