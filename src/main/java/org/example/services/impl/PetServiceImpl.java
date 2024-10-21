@@ -83,7 +83,7 @@ public class PetServiceImpl implements IPetService {
                 PetImage newPetImage = new PetImage();
                 newPetImage.setPet(savedPet);
                 newPetImage.setImageUrl(imageUrl);
-                newPetImage.setCreate(System.currentTimeMillis());
+                newPetImage.setCreateAt(System.currentTimeMillis());
 
                 petImageRepository.save(newPetImage);
             }

@@ -23,28 +23,4 @@ public class PetImage {
 
     public PetImage() {
     }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public Long getCreate() {
-        return createAt;
-    }
-
-    public void setCreate(Long create) {
-        this.createAt = create;
-    }
 }
