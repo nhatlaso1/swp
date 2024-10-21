@@ -1,9 +1,11 @@
 package org.example.services.impl;
 
 import org.example.data.request.RegisterVolunteerRequest;
+import org.example.data.response.VolunteerDetailResponse;
 import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.entities.Volunteer;
+import org.example.model.VolunteerDetailVO;
 import org.example.repositories.RoleRepository;
 import org.example.repositories.UserRepository;
 import org.example.repositories.VolunteerRepository;
@@ -57,6 +59,27 @@ public class VolunteerServiceImpl implements IVolunteerService {
         volunteerRepository.save(volunteer);
 
         return 1;
+    }
+
+    @Override
+    public VolunteerDetailResponse detail(int userId) {
+        VolunteerDetailVO detailVO = volunteerRepository.findByUserId(userId);
+
+        VolunteerDetailResponse response = VolunteerDetailResponse.builder()
+                .gender(detailVO.getGender())
+                .reason(detailVO.getReason())
+                .currentJob(detailVO.getCurrentJob())
+                .dob(detailVO.getDob())
+                .phone(detailVO.getPhone())
+                .cccd(detailVO.getCccd())
+                .email(detailVO.getEmail())
+                .address(detailVO.getAddress())
+                .status(detailVO.getStatus())
+                .fullName(detailVO.getFullName())
+                .experience(detailVO.getExperience())
+                .build();
+
+        return response;
     }
 
 }
