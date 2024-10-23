@@ -11,4 +11,7 @@ public interface FilterPetVO {
     String getType();
     String getImage();
     int getStatus();
+    Double getAverageStar();
+    int getReviewCount();
+    String getProfileImage();
 }

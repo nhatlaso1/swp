@@ -33,10 +33,12 @@ public class UserController {
         if(result == -1){
             responseData = new ResponseData<>("OLD_PASSWORD_INCORRECT"
                     , "Old password incorrect. Please try again!", null);
+            return ResponseEntity.ok(responseData);
         }
         else if(result == 0){
             responseData = new ResponseData<>("PASSWORD_NOT_MATCH"
                     , "Password not match. Please try again!", null);
+            return ResponseEntity.ok(responseData);
         }
 
         responseData = new ResponseData<>("CHANGE_PASSWORD_SUCCESS"

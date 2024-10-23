@@ -39,6 +39,7 @@ public class VolunteerServiceImpl implements IVolunteerService {
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setFullName(request.getFullName());
         newUser.setPhone(request.getPhone());
+        newUser.setImage(request.getImage());
         newUser.setAddress(request.getAddress());
 
         Role userRole = roleRepository.findById("VOLUNTEER").orElseThrow(() -> new RuntimeException("Role không tồn tại"));

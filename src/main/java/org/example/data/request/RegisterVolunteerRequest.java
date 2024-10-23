@@ -11,6 +11,7 @@ public class RegisterVolunteerRequest {
     private String username;
     private String password;
     private String fullName;
+    private String image;
     private String email;
     private String phone;
     private String address;

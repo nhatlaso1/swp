@@ -47,6 +47,7 @@ public class UserServiceImpl implements IUserService {
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setFullName(request.getName());
+        newUser.setImage(request.getImage());
         newUser.setPhone(request.getPhone());
         newUser.setAddress(request.getAddress());
         newUser.setStatus("Active");
@@ -68,6 +69,7 @@ public class UserServiceImpl implements IUserService {
         profile.setAddress(user.getAddress());
         profile.setPhone(user.getPhone());
         profile.setEmail(user.getEmail());
+        profile.setImage(user.getImage());
 
         return profile;
     }
