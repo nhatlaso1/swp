@@ -1,22 +1,21 @@
 package org.example.controller;
 
-import org.example.data.request.AdoptHistoryRequest;
 import org.example.data.request.ChangePasswordRequest;
 import org.example.data.request.ListUserRequest;
 import org.example.data.response.*;
+import org.example.repositories.UserRepository;
 import org.example.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/profile")
     public ResponseEntity<ResponseData<ProfileResponse>> profile() {
@@ -52,6 +51,14 @@ public class UserController {
 
         ResponseData<PaginationVO<ListUserResponse>> responseData = new ResponseData<>("LIST_USER_SUCCESS",
                 "List user successful", responsePaginationVO);
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/deactivate")
+    public ResponseEntity<ResponseData<String>> deactivateUser(@RequestParam int userId) {
+        userRepository.deactivateUser("Inactive", userId);
+        ResponseData<String> responseData = new ResponseData<>("DEACTIVATE_USER_SUCCESS"
+                , "Deactivate user successful.", null);
         return ResponseEntity.ok(responseData);
     }
 
