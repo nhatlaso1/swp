@@ -12,7 +12,9 @@ public class ListUserResponse {
     private String phone;
     private String address;
     private String status;
+    private String statusApplication;
     private String role;
+    private String image;
 
     public static ListUserResponse fromUser(User user) {
         ListUserResponse response = new ListUserResponse();
@@ -24,6 +26,8 @@ public class ListUserResponse {
         response.setPhone(user.getPhone());
         response.setStatus(user.getStatus());
         response.setRole(user.getRole().getName());
+        response.setStatusApplication(user.getVolunteer() == null ? null : user.getVolunteer().getStatus());
+        response.setImage(user.getImage());
 
         return response;
     }

@@ -4,6 +4,8 @@ import org.example.data.request.LoginRequest;
 import org.example.data.request.RegisterRequest;
 import org.example.data.response.LoginResponse;
 import org.example.data.response.ResponseData;
+import org.example.entities.User;
+import org.example.repositories.UserRepository;
 import org.example.services.interfaces.IUserService;
 import org.example.utils.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
@@ -27,16 +29,31 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final IUserService userService;
+    private final UserRepository userRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider, IUserService userService) {
+    public AuthController(AuthenticationManager authenticationManager
+            , JwtTokenProvider tokenProvider
+            , IUserService userService
+            , UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseData<LoginResponse>> authenticate(@RequestBody LoginRequest loginRequest) {
         try {
+
+            User user = userRepository.findByUsername(loginRequest.getUsername()).get();
+
+            if(user.getStatus().equals("Inactive")){
+                ResponseData<LoginResponse> responseData = new ResponseData<>("ACCOUNT_INACTIVE"
+                        , "Your account inactive. Please contact to admin", null);
+
+                return ResponseEntity.ok(responseData);
+            }
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),

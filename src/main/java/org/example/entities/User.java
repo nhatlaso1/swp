@@ -36,6 +36,9 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Volunteer volunteer;
+
     @Column(name = "address")
     private String address;
 
