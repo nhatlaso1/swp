@@ -13,10 +13,10 @@ public class Adoption {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "adopter_id", nullable = false)
     private User adopterId;
     @Column(name = "type")

@@ -1,6 +1,7 @@
 package org.example.services.impl;
 
 import org.example.data.request.CreateAdoptionRequest;
+import org.example.data.request.CreatePetRequest;
 import org.example.data.request.FilterPetRequest;
 import org.example.data.request.UpdateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
@@ -65,7 +66,7 @@ public class PetServiceImpl implements IPetService {
     }
 
     @Override
-    public int create(CreateAdoptionRequest request) {
+    public int create(CreatePetRequest request) {
         Pet newPet = new Pet(
                 request.getName(),
                 new PetType(request.getType()),

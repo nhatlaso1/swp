@@ -1,14 +1,15 @@
 package org.example.services.impl;
 
 import org.example.data.request.AdoptHistoryRequest;
+import org.example.data.request.CreateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.ViewAdoptResponse;
-import org.example.entities.User;
+import org.example.entities.*;
+import org.example.enums.AdoptionStatusEnum;
 import org.example.model.AdoptHistoryVO;
 import org.example.model.ViewAdoptVO;
-import org.example.repositories.AdoptionRepository;
-import org.example.repositories.UserRepository;
+import org.example.repositories.*;
 import org.example.services.interfaces.IAdoptService;
 import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class AdoptServiceImpl implements IAdoptService {
     private AdoptionRepository adoptionRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    @Autowired
+    private PetRepository petRepository;
+    @Autowired
+    private PetImageRepository petImageRepository;
+
     @Override
     public PaginationVO<AdoptHistoryResponse> history(AdoptHistoryRequest request) {
 
@@ -76,5 +84,58 @@ public class AdoptServiceImpl implements IAdoptService {
         response.setImages(imageList);
 
         return response;
+    }
+
+    @Override
+    public int create(CreateAdoptionRequest request) {
+        Pet newPet = new Pet(
+                request.getName(),
+                new PetType(request.getType()),
+                request.getAge(),
+                request.getBreed(),
+                "Pending",
+                request.getDescription(),
+                request.getAddress()
+        );
+
+        Pet savedPet = petRepository.save(newPet);
+
+        if (request.getImageUrl() != null) {
+            for (String imageUrl : request.getImageUrl()) {
+                PetImage newPetImage = new PetImage();
+                newPetImage.setPet(savedPet);
+                newPetImage.setImageUrl(imageUrl);
+                newPetImage.setCreateAt(System.currentTimeMillis());
+
+                petImageRepository.save(newPetImage);
+            }
+        }
+
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+
+        Adoption newAdoption = new Adoption();
+        newAdoption.setAdopterId(currentUser);
+        newAdoption.setPet(savedPet);
+        newAdoption.setType(request.getType());
+        newAdoption.setStatus(1);
+        newAdoption.setTitle(request.getTitle());
+
+        Adoption savedAdopt = adoptionRepository.save(newAdoption);
+
+        Application newApplication = Application.builder()
+                .user(currentUser)
+                .adoption(savedAdopt)
+                .experience(request.getExperience())
+                .status(AdoptionStatusEnum.PENDING.getValue())
+                .homeOwner(request.getHouseOwner())
+                .houseType(request.getHouseType())
+                .reason(request.getReason())
+                .isAllergic(request.getIsAllergic())
+                .build();
+
+        applicationRepository.save(newApplication);
+
+        return 0;
     }
 }

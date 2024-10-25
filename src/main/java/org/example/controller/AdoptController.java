@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.data.request.AdoptHistoryRequest;
 import org.example.data.request.CreateAdoptionRequest;
+import org.example.data.request.CreatePetRequest;
 import org.example.data.request.UpdateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
@@ -22,12 +23,23 @@ public class AdoptController {
     @Autowired
     private IAdoptService adoptService;
 
-    @PostMapping("/adopt/create")
-    public ResponseEntity<ResponseData<String>> create(@RequestBody CreateAdoptionRequest request) {
+    //cho pet
+    @PostMapping("/pet/create")
+    public ResponseEntity<ResponseData<String>> create(@RequestBody CreatePetRequest request) {
         petService.create(request);
 
-        ResponseData<String> responseData = new ResponseData<>("ADD_PET_ADOPT_SUCCESS",
-                "Add pet adoption successful", null);
+        ResponseData<String> responseData = new ResponseData<>("ADD_PET_SUCCESS",
+                "Add pet successful", null);
+        return ResponseEntity.ok(responseData);
+    }
+
+    // nhận nuôi
+    @PostMapping("/adopt/create")
+    public ResponseEntity<ResponseData<String>> createAdopt(@RequestBody CreateAdoptionRequest request) {
+        adoptService.create(request);
+
+        ResponseData<String> responseData = new ResponseData<>("REQUEST_ADOPT_PET_SUCCESS",
+                "Request adopt pet successful", null);
         return ResponseEntity.ok(responseData);
     }
 

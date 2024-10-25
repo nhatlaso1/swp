@@ -83,7 +83,7 @@ public class UserServiceImpl implements IUserService {
             return -1;
         }
 
-        if(!request.getNewPassword().equals(request.getOldPassword())){
+        if(!request.getNewPassword().equals(request.getConfirmPassword())){
             return 0;
         }
 
