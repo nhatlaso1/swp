@@ -8,6 +8,7 @@ public interface ViewAdoptVO {
     int getAge();
     String getAddress();
     String getFullName();
+    String getProfileImage();
     String getType();
     String getImages();
 }
