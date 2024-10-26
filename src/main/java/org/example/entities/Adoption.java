@@ -25,5 +25,9 @@ public class Adoption {
     private int status;
     @Column(name = "adoption_date")
     private String adoptionDate;
+    @Column(name = "updated_at")
+    private String updatedAt;
+    @Column(name = "updated_by")
+    private int updatedBy;
 
 }

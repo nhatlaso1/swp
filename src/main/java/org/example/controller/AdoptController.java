@@ -1,9 +1,6 @@
 package org.example.controller;
 
-import org.example.data.request.AdoptHistoryRequest;
-import org.example.data.request.CreateAdoptionRequest;
-import org.example.data.request.CreatePetRequest;
-import org.example.data.request.UpdateAdoptionRequest;
+import org.example.data.request.*;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.ResponseData;
@@ -42,6 +39,23 @@ public class AdoptController {
                 "Request adopt pet successful", null);
         return ResponseEntity.ok(responseData);
     }
+
+    @PostMapping("/adopt/changeStatus")
+    public ResponseEntity<ResponseData<String>> confirmAdopt(@RequestBody ChangeStatusAdoptRequest request) {
+        int result = adoptService.changeStatus(request);
+
+        ResponseData<String> responseData = null;
+        if(result == -1){
+            responseData = new ResponseData<>("DON'T HAVE PERMISSIONS",
+                    "You don't have permission. Please contact to admin", null);
+        } else{
+            responseData = new ResponseData<>("CHANGE_STATUS_ADOPT_SUCCESS",
+                    "Change status of adopt successful", null);
+        }
+
+        return ResponseEntity.ok(responseData);
+    }
+
 
     @PostMapping("/adopt/history")
     public ResponseEntity<ResponseData<PaginationVO<AdoptHistoryResponse>>> history(@RequestBody AdoptHistoryRequest request) {

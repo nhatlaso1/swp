@@ -1,9 +1,11 @@
 package org.example.repositories;
 
+import jakarta.transaction.Transactional;
 import org.example.entities.Adoption;
 import org.example.model.AdoptHistoryVO;
 import org.example.model.ViewAdoptVO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -51,4 +53,16 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Integer> {
     ViewAdoptVO view(
         int adoptId
     );
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE `adoptions`\n" +
+            "SET\n" +
+            "    `status` = :status,\n" +
+            "    `updated_by` = :updatedBy,\n" +
+            "    `updated_at` = NOW()\n" +
+            "WHERE `id` = :id;\n", nativeQuery = true)
+    void changeStatus(@Param("status") int status,
+                      @Param("updatedBy") int updateBy,
+                      @Param("id") Integer id);
 }

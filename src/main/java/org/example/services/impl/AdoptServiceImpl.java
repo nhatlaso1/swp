@@ -1,6 +1,7 @@
 package org.example.services.impl;
 
 import org.example.data.request.AdoptHistoryRequest;
+import org.example.data.request.ChangeStatusAdoptRequest;
 import org.example.data.request.CreateAdoptionRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
@@ -139,6 +140,20 @@ public class AdoptServiceImpl implements IAdoptService {
                 .build();
 
         applicationRepository.save(newApplication);
+
+        return 0;
+    }
+
+    @Override
+    public int changeStatus(ChangeStatusAdoptRequest request) {
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+
+        if(currentUser.getRole().getId().equals("USER")){
+            return -1;
+        }
+
+        adoptionRepository.changeStatus(request.getStatus(), currentUser.getId(), request.getAdoptId());
 
         return 0;
     }
