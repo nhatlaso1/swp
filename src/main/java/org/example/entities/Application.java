@@ -34,4 +34,8 @@ public class Application {
     private String reason;
     @Column(name = "status")
     private int status;
+    @Column(name = "updated_at")
+    private String updatedAt;
+    @Column(name = "updated_by")
+    private int updatedBy;
 }

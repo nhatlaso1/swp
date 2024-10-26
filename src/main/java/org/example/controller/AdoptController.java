@@ -56,7 +56,6 @@ public class AdoptController {
         return ResponseEntity.ok(responseData);
     }
 
-
     @PostMapping("/adopt/history")
     public ResponseEntity<ResponseData<PaginationVO<AdoptHistoryResponse>>> history(@RequestBody AdoptHistoryRequest request) {
         PaginationVO<AdoptHistoryResponse> responsePaginationVO =  adoptService.history(request);

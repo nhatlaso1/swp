@@ -1,15 +1,19 @@
 package org.example.services.impl;
 
+import org.example.data.request.ConfirmApplicationRequest;
 import org.example.data.request.RegisterVolunteerRequest;
 import org.example.data.response.VolunteerDetailResponse;
 import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.entities.Volunteer;
 import org.example.model.VolunteerDetailVO;
+import org.example.repositories.ApplicationRepository;
 import org.example.repositories.RoleRepository;
 import org.example.repositories.UserRepository;
 import org.example.repositories.VolunteerRepository;
+import org.example.services.interfaces.IAdoptService;
 import org.example.services.interfaces.IVolunteerService;
+import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,8 @@ public class VolunteerServiceImpl implements IVolunteerService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ApplicationRepository applicationRepository;
 
     @Override
     public int register(RegisterVolunteerRequest request) {
@@ -81,6 +87,20 @@ public class VolunteerServiceImpl implements IVolunteerService {
                 .build();
 
         return response;
+    }
+
+    @Override
+    public int changeStatus(ConfirmApplicationRequest request) {
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+
+        if(currentUser.getRole().getId().equals("USER")){
+            return -1;
+        }
+
+        applicationRepository.changeStatus(request.getStatus(), currentUser.getId(), request.getApplicationId());
+
+        return 0;
     }
 
 }
