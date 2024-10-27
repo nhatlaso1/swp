@@ -17,14 +17,29 @@ public class Event {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "event_date")
-    private LocalDateTime eventDate;
+    @Column(name = "start_date")
+    private String startDate;
+
+    @Column(name = "end_date")
+    private String endDate;
+
+    @Column(name = "target_amount")
+    private String targetAmount;
+
+    @Column(name = "current_amount")
+    private String currentAmount;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "created_date")
+    private String createdDate;
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
