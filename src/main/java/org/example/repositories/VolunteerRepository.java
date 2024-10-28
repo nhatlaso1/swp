@@ -26,7 +26,7 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Volunteers v SET v.status = :status WHERE v.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Volunteers v SET v.status = :status WHERE v.user_id = :id", nativeQuery = true)
     void confirmStatus(@Param("status") String status, @Param("id") Integer id);
 
 }

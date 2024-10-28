@@ -12,4 +12,5 @@ public interface IAdoptService {
     ViewAdoptResponse view(int adoptId);
     int create(CreateAdoptionRequest request);
     int changeStatus(ChangeStatusAdoptRequest request);
+    int approve(ChangeStatusAdoptRequest request);
 }

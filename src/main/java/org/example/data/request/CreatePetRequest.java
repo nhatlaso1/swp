@@ -13,4 +13,5 @@ public class CreatePetRequest {
     private String description;
     private String address;
     private String breed;
+    private int petTypeId;
 }

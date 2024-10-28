@@ -7,6 +7,7 @@ public class FilterPetRequest {
     private int type;
     private String address;
     private int petTypeId;
+    private int status;
     private int ageFrom;
     private int ageTo;
     private int pageSize;

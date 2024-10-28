@@ -16,17 +16,12 @@ spring:
     username: your-email@gmail.com
     password: your-password
     properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-          connection timeout: 5000
-          timeout: 3000
-          write timeout: 5000
-
-
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 3000
+      mail.smtp.writetimeout: 5000
 server:
   port: 8080
 

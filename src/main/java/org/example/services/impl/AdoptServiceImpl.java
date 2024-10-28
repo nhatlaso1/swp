@@ -93,37 +93,18 @@ public class AdoptServiceImpl implements IAdoptService {
 
     @Override
     public int create(CreateAdoptionRequest request) {
-        Pet newPet = new Pet(
-                request.getName(),
-                new PetType(request.getType()),
-                request.getAge(),
-                request.getBreed(),
-                "Pending",
-                request.getDescription(),
-                request.getAddress()
-        );
-
-        Pet savedPet = petRepository.save(newPet);
-
-        if (request.getImageUrl() != null) {
-            for (String imageUrl : request.getImageUrl()) {
-                PetImage newPetImage = new PetImage();
-                newPetImage.setPet(savedPet);
-                newPetImage.setImageUrl(imageUrl);
-                newPetImage.setCreateAt(System.currentTimeMillis());
-
-                petImageRepository.save(newPetImage);
-            }
-        }
-
         String username = CommonUtils.getCurrentUsername();
         User currentUser = userRepository.findByUsername(username).get();
 
         Adoption newAdoption = new Adoption();
         newAdoption.setAdopterId(currentUser);
-        newAdoption.setPet(savedPet);
+
+        Pet pet = petRepository.findById(request.getPetId()).get();
+        pet.setStatus("Review");
+        newAdoption.setPet(pet);
         newAdoption.setType(request.getType());
         newAdoption.setStatus(1);
+        newAdoption.setStatus(AdoptionStatusEnum.REVIEW.getValue());
         newAdoption.setTitle(request.getTitle());
 
         Adoption savedAdopt = adoptionRepository.save(newAdoption);
@@ -150,6 +131,21 @@ public class AdoptServiceImpl implements IAdoptService {
         User currentUser = userRepository.findByUsername(username).get();
 
         if(currentUser.getRole().getId().equals("USER")){
+            return -1;
+        }
+
+        adoptionRepository.changeStatus(request.getStatus(), currentUser.getId(), request.getAdoptId());
+
+        return 0;
+    }
+
+    @Override
+    public int approve(ChangeStatusAdoptRequest request) {
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+        Adoption adoption = adoptionRepository.findById(request.getAdoptId()).get();
+
+        if(!currentUser.getRole().getId().equals("USER") || adoption.getAdopterId().getId() != currentUser.getId()){
             return -1;
         }
 

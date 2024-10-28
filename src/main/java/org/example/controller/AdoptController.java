@@ -56,6 +56,22 @@ public class AdoptController {
         return ResponseEntity.ok(responseData);
     }
 
+    @PostMapping("/adopt/approve")
+    public ResponseEntity<ResponseData<String>> approveAdopt(@RequestBody ChangeStatusAdoptRequest request) {
+        int result = adoptService.approve(request);
+
+        ResponseData<String> responseData = null;
+        if(result == -1){
+            responseData = new ResponseData<>("DON'T HAVE PERMISSIONS",
+                    "You don't have permission.", null);
+        } else{
+            responseData = new ResponseData<>("APPROVED_ADOPT_SUCCESS",
+                    "Approved adopt successful", null);
+        }
+
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping("/adopt/history")
     public ResponseEntity<ResponseData<PaginationVO<AdoptHistoryResponse>>> history(@RequestBody AdoptHistoryRequest request) {
         PaginationVO<AdoptHistoryResponse> responsePaginationVO =  adoptService.history(request);

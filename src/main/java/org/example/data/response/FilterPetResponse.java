@@ -8,16 +8,18 @@ public class FilterPetResponse {
     private int id;
     private String title;
     private String petName;
-    private String petType;
+    private int petType;
     private int age;
     private String address;
     private String fullName;
-    private String type;
+    private int type;
     private String image;
+    private String breed;
     private Double star;
     private int review;
     private int status;
     private String profileImage;
+    private String description;
 
     public static FilterPetResponse fromFilterPetVO(FilterPetVO filterPetVO) {
         FilterPetResponse response = new FilterPetResponse();
@@ -32,11 +34,9 @@ public class FilterPetResponse {
         response.setProfileImage(filterPetVO.getProfileImage());
         response.setStar(filterPetVO.getAverageStar());
         response.setReview(filterPetVO.getReviewCount());
-        if(filterPetVO.getType() == "1"){
-            response.setType("Nhận nuôi");
-        } else{
-            response.setType("Đem cho");
-        }
+        response.setType(filterPetVO.getType());
+        response.setDescription(filterPetVO.getDescription());
+        response.setBreed(filterPetVO.getBreed());
         response.setImage(filterPetVO.getImage());
         return response;
     }

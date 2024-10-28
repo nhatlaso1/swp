@@ -54,6 +54,13 @@ public class AuthController {
                 return ResponseEntity.ok(responseData);
             }
 
+            if (user.getVolunteer() != null && "Waiting".equals(user.getVolunteer().getStatus())) {
+                ResponseData<LoginResponse> responseData = new ResponseData<>("ACCOUNT_DONT_ACCEPT_YET",
+                        "Your account doesn't accept yet. Please contact the admin", null);
+
+                return ResponseEntity.ok(responseData);
+            }
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),

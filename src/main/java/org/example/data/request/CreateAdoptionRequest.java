@@ -7,13 +7,8 @@ import java.util.List;
 @Data
 public class CreateAdoptionRequest {
     private int type = 2;
-    private String name;
-    private int age;
     private String title;
-    private List<String> imageUrl;
-    private String description;
-    private String address;
-    private String breed;
+    private int petId;
 
     private String houseType;
     private int houseOwner;

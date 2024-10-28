@@ -9,10 +9,7 @@ import org.example.data.response.FilterPetResponse;
 import org.example.data.response.PaginationVO;
 import org.example.entities.*;
 import org.example.model.FilterPetVO;
-import org.example.repositories.AdoptionRepository;
-import org.example.repositories.PetImageRepository;
-import org.example.repositories.PetRepository;
-import org.example.repositories.UserRepository;
+import org.example.repositories.*;
 import org.example.services.interfaces.IPetService;
 import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class PetServiceImpl implements IPetService {
     private PetImageRepository petImageRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PetTypeRepository petTypeRepository;
 
 
     @Override
@@ -39,9 +38,10 @@ public class PetServiceImpl implements IPetService {
         List<FilterPetVO> petVOS = petRepository.findPetsWithFilter(
                 request.getType(),
                 request.getAddress() == null ? "" : request.getAddress(),
-                request.getType(),
+                request.getPetTypeId(),
                 request.getAgeFrom(),
                 request.getAgeTo(),
+                request.getStatus(),
                 request.getPageSize(),
                 request.getPageNumber()
         );
@@ -49,7 +49,8 @@ public class PetServiceImpl implements IPetService {
         int count = petRepository.countPetsWithFilter(
                 request.getType(),
                 request.getAddress() == null ? "" : request.getAddress(),
-                request.getType(),
+                request.getPetTypeId(),
+                request.getStatus(),
                 request.getAgeFrom(),
                 request.getAgeTo()
         );
@@ -69,7 +70,7 @@ public class PetServiceImpl implements IPetService {
     public int create(CreatePetRequest request) {
         Pet newPet = new Pet(
                 request.getName(),
-                new PetType(request.getType()),
+                new PetType(request.getPetTypeId()),
                 request.getAge(),
                 request.getBreed(),
                 "Pending",
@@ -117,14 +118,14 @@ public class PetServiceImpl implements IPetService {
 
             pet.setAge(request.getAge());
             pet.setBreed(request.getBreed());
-            pet.setPetType(new PetType(request.getType()));
+            PetType petType = petTypeRepository.findById(request.getPetTypeId()).get();
+            pet.setPetType(petType);
             pet.setDescription(request.getDescription());
 
             existingAdoption.setPet(pet);
         }
 
         existingAdoption.setTitle(request.getTitle());
-        existingAdoption.setType(request.getType());
         existingAdoption.setPet(pet);
 
         adoptionRepository.save(existingAdoption);
