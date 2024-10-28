@@ -1,7 +1,12 @@
 package org.example.controller;
 
+import org.example.data.request.FilterPetRequest;
 import org.example.data.request.event.CreateEventRequest;
+import org.example.data.request.event.FilterEventRequest;
+import org.example.data.response.FilterPetResponse;
+import org.example.data.response.PaginationVO;
 import org.example.data.response.ResponseData;
+import org.example.data.response.event.FilterEventResponse;
 import org.example.services.interfaces.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +34,16 @@ public class EventController {
                     "Create new event successful", null);
         }
 
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/event/filter")
+    public ResponseEntity<ResponseData<PaginationVO<FilterEventResponse>>> filter(@RequestBody FilterEventRequest request) {
+
+        PaginationVO<FilterEventResponse> responsePaginationVO = eventService.filter(request);
+
+        ResponseData<PaginationVO<FilterEventResponse>> responseData = new ResponseData<>("FILTER_EVENT_SUCCESS"
+                , "Filter event successful", responsePaginationVO);
         return ResponseEntity.ok(responseData);
     }
 }

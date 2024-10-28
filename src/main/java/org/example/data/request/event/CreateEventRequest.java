@@ -2,6 +2,8 @@ package org.example.data.request.event;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class CreateEventRequest {
     private String title;
@@ -9,5 +11,5 @@ public class CreateEventRequest {
     private String description;
     private String startDate;
     private String endDate;
-    private String targetAmount;
+    private BigDecimal targetAmount;
 }

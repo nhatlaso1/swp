@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.example.entities.User;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,10 +33,10 @@ public class Event {
     private String endDate;
 
     @Column(name = "target_amount")
-    private String targetAmount;
+    private BigDecimal targetAmount;
 
     @Column(name = "current_amount")
-    private String currentAmount;
+    private BigDecimal currentAmount;
 
     @Column(name = "status")
     private int status;
