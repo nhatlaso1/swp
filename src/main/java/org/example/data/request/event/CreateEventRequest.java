@@ -10,5 +10,4 @@ public class CreateEventRequest {
     private String startDate;
     private String endDate;
     private String targetAmount;
-    private int createdBy;
 }

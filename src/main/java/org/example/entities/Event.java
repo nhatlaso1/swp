@@ -1,6 +1,7 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.example.entities.User;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @Table(name = "events")
 public class Event {
     @Id
@@ -36,7 +38,7 @@ public class Event {
     private String currentAmount;
 
     @Column(name = "status")
-    private String status;
+    private int status;
 
     @Column(name = "created_date")
     private String createdDate;
