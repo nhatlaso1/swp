@@ -82,4 +82,15 @@ public class EventServiceImpl implements IEventService {
 
         return responsePaginationVO;
     }
+
+    @Override
+    public FilterEventResponse view(int eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found with ID: " + eventId));
+
+        FilterEventResponse response = FilterEventResponse.fromFilterEventList(event);
+
+        return response;
+    }
+
 }

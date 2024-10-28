@@ -1,8 +1,10 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.entities.User;
 
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Table(name = "events")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

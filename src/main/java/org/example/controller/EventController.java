@@ -10,10 +10,7 @@ import org.example.data.response.event.FilterEventResponse;
 import org.example.services.interfaces.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -44,6 +41,17 @@ public class EventController {
 
         ResponseData<PaginationVO<FilterEventResponse>> responseData = new ResponseData<>("FILTER_EVENT_SUCCESS"
                 , "Filter event successful", responsePaginationVO);
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/public/event/view")
+    public ResponseEntity<ResponseData<FilterEventResponse>> view(@RequestParam int eventId) {
+
+        FilterEventResponse response = eventService.view(eventId);
+
+        ResponseData<FilterEventResponse> responseData = new ResponseData<>("VIEW_EVENT_SUCCESS"
+                , "View event detail successful", response);
+
         return ResponseEntity.ok(responseData);
     }
 }

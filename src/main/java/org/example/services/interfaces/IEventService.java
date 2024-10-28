@@ -8,4 +8,5 @@ import org.example.data.response.event.FilterEventResponse;
 public interface IEventService {
     int create(CreateEventRequest request);
     PaginationVO<FilterEventResponse> filter(FilterEventRequest request);
+    FilterEventResponse view(int eventId);
 }
