@@ -27,7 +27,11 @@ public class ApplicationController {
         if(result == -1){
             responseData = new ResponseData<>("DON'T HAVE PERMISSIONS",
                     "You don't have permission. Please contact to admin", null);
-        } else{
+        } else if(result == -2){
+            responseData = new ResponseData<>("ADOPTION_DOESN'T_EXIST",
+                    "Adoption doesn't exist", null);
+            return ResponseEntity.ok(responseData);
+        }else{
             responseData = new ResponseData<>("CHANGE_STATUS_APPLICATION_SUCCESS",
                     "Change status of application successful", null);
         }

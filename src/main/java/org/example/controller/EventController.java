@@ -34,7 +34,7 @@ public class EventController {
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping("/event/filter")
+    @PostMapping("/public/event/filter")
     public ResponseEntity<ResponseData<PaginationVO<FilterEventResponse>>> filter(@RequestBody FilterEventRequest request) {
 
         PaginationVO<FilterEventResponse> responsePaginationVO = eventService.filter(request);

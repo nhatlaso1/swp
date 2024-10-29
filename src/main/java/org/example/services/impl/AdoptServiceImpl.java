@@ -86,6 +86,7 @@ public class AdoptServiceImpl implements IAdoptService {
         response.setBreed(viewAdoptVO.getBreed());
         response.setDescription(viewAdoptVO.getDescription());
         response.setProfileImage(viewAdoptVO.getProfileImage());
+        response.setStatus(viewAdoptVO.getStatus());
 
         response.setApplication(applicationRepository.findByAdoptId(viewAdoptVO.getId()) == null
                 ? null : applicationRepository.findByAdoptId(viewAdoptVO.getId()));

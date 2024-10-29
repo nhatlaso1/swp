@@ -3,15 +3,12 @@ package org.example.services.impl;
 import org.example.data.request.ConfirmApplicationRequest;
 import org.example.data.request.RegisterVolunteerRequest;
 import org.example.data.response.VolunteerDetailResponse;
+import org.example.entities.Adoption;
 import org.example.entities.Role;
 import org.example.entities.User;
 import org.example.entities.Volunteer;
 import org.example.model.VolunteerDetailVO;
-import org.example.repositories.ApplicationRepository;
-import org.example.repositories.RoleRepository;
-import org.example.repositories.UserRepository;
-import org.example.repositories.VolunteerRepository;
-import org.example.services.interfaces.IAdoptService;
+import org.example.repositories.*;
 import org.example.services.interfaces.IVolunteerService;
 import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,8 @@ public class VolunteerServiceImpl implements IVolunteerService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ApplicationRepository applicationRepository;
+    @Autowired
+    private AdoptionRepository adoptionRepository;
 
     @Override
     public int register(RegisterVolunteerRequest request) {
@@ -92,6 +91,12 @@ public class VolunteerServiceImpl implements IVolunteerService {
 
     @Override
     public int changeStatus(ConfirmApplicationRequest request) {
+        Adoption adoption = adoptionRepository.findById(request.getApplicationId()).orElse(null);
+
+        if(adoption == null){
+            return -2;
+        }
+
         String username = CommonUtils.getCurrentUsername();
         User currentUser = userRepository.findByUsername(username).get();
 
