@@ -1,13 +1,16 @@
 package org.example.services.impl;
 
 import org.example.data.request.event.CreateEventRequest;
+import org.example.data.request.event.DonateEventRequest;
 import org.example.data.request.event.FilterEventRequest;
 import org.example.data.request.event.UpdateEventRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.event.FilterEventResponse;
+import org.example.entities.Donation;
 import org.example.entities.Event;
 import org.example.entities.User;
+import org.example.repositories.DonationRepository;
 import org.example.repositories.EventRepository;
 import org.example.repositories.UserRepository;
 import org.example.services.interfaces.IEventService;
@@ -27,6 +30,8 @@ public class EventServiceImpl implements IEventService {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DonationRepository donationRepository;
 
     @Override
     public int create(CreateEventRequest request) {
@@ -111,6 +116,34 @@ public class EventServiceImpl implements IEventService {
 
         eventRepository.save(event);
         return 0;
+    }
+
+    @Override
+    public int donate(DonateEventRequest request) {
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+        Event event = eventRepository.findById(request.getEventId()).orElse(null);
+
+        if(event != null && event.getCurrentAmount().compareTo(event.getTargetAmount()) <= 0){
+            Donation donation = Donation.builder()
+                    .event(event)
+                    .amount(request.getAmount())
+                    .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .user(currentUser)
+                    .build();
+
+            donationRepository.save(donation);
+
+            event.setCurrentAmount(event.getCurrentAmount().add(BigDecimal.valueOf(request.getAmount())));
+            if(event.getCurrentAmount().add(BigDecimal.valueOf(request.getAmount())).compareTo(event.getTargetAmount()) >= 0){
+                event.setStatus(2);
+            } else{
+                event.setStatus(3);
+            }
+            eventRepository.save(event);
+            return 0;
+        }
+        return -1;
     }
 
 }

@@ -25,3 +25,10 @@ spring:
 server:
   port: 8080
 
+vnpay:
+  tmnCode: "7Z1W0PPS"
+  hashSecret: "L5FTGVCGW083NCKEV7HXQ2CJO5FITNF2"
+  paymentUrl: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+  returnUrl: "https://fbs.io.vn"
+
+

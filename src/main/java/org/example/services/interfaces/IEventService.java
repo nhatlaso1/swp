@@ -1,6 +1,7 @@
 package org.example.services.interfaces;
 
 import org.example.data.request.event.CreateEventRequest;
+import org.example.data.request.event.DonateEventRequest;
 import org.example.data.request.event.FilterEventRequest;
 import org.example.data.request.event.UpdateEventRequest;
 import org.example.data.response.PaginationVO;
@@ -11,4 +12,5 @@ public interface IEventService {
     PaginationVO<FilterEventResponse> filter(FilterEventRequest request);
     FilterEventResponse view(int eventId);
     int update(UpdateEventRequest request);
+    int donate(DonateEventRequest request);
 }
