@@ -3,6 +3,7 @@ package org.example.services.impl;
 import org.example.data.request.ChangePasswordRequest;
 import org.example.data.request.ListUserRequest;
 import org.example.data.request.RegisterRequest;
+import org.example.data.request.UpdateProfileRequest;
 import org.example.data.response.ListUserResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.ProfileResponse;
@@ -73,6 +74,24 @@ public class UserServiceImpl implements IUserService {
 
         return profile;
     }
+
+    @Override
+    public int updateProfile(UpdateProfileRequest request) {
+        String currentUsername = CommonUtils.getCurrentUsername();
+
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + currentUsername));
+
+        user.setFullName(request.getFullName());
+        user.setPhone(request.getPhone());
+        user.setAddress(request.getAddress());
+        user.setImage(request.getImage());
+
+        userRepository.save(user);
+
+        return 1;
+    }
+
 
     @Override
     public int changePassword(ChangePasswordRequest request) {

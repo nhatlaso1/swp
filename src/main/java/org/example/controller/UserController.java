@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.data.request.ChangePasswordRequest;
 import org.example.data.request.ListUserRequest;
+import org.example.data.request.UpdateProfileRequest;
 import org.example.data.response.*;
 import org.example.repositories.UserRepository;
 import org.example.services.interfaces.IUserService;
@@ -21,6 +22,16 @@ public class UserController {
     public ResponseEntity<ResponseData<ProfileResponse>> profile() {
         ResponseData<ProfileResponse> responseData = new ResponseData<>("GET_PROFILE_SUCCESS"
                 , "Get profile successful", userService.profile());
+
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/profile/update")
+    public ResponseEntity<ResponseData<String>> updateProfile(@RequestBody UpdateProfileRequest request) {
+        userService.updateProfile(request);
+
+        ResponseData<String> responseData = new ResponseData<>("UPDATE_PROFILE_SUCCESS"
+                , "Update profile successful", null);
 
         return ResponseEntity.ok(responseData);
     }
