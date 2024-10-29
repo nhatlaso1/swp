@@ -2,6 +2,7 @@ package org.example.services.impl;
 
 import org.example.data.request.event.CreateEventRequest;
 import org.example.data.request.event.FilterEventRequest;
+import org.example.data.request.event.UpdateEventRequest;
 import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.event.FilterEventResponse;
@@ -91,6 +92,25 @@ public class EventServiceImpl implements IEventService {
         FilterEventResponse response = FilterEventResponse.fromFilterEventList(event);
 
         return response;
+    }
+
+    @Override
+    public int update(UpdateEventRequest request) {
+        Event event = eventRepository.findById(request.getId()).orElse(null);
+
+        if(event == null){
+            return -1;
+        }
+
+        event.setImage(request.getImage());
+        event.setDescription(request.getDescription());
+        event.setStartDate(request.getStartDate());
+        event.setEndDate(request.getEndDate());
+        event.setTargetAmount(request.getTargetAmount());
+        event.setTitle(request.getTitle());
+
+        eventRepository.save(event);
+        return 0;
     }
 
 }

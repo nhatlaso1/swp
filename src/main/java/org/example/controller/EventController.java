@@ -1,9 +1,8 @@
 package org.example.controller;
 
-import org.example.data.request.FilterPetRequest;
 import org.example.data.request.event.CreateEventRequest;
 import org.example.data.request.event.FilterEventRequest;
-import org.example.data.response.FilterPetResponse;
+import org.example.data.request.event.UpdateEventRequest;
 import org.example.data.response.PaginationVO;
 import org.example.data.response.ResponseData;
 import org.example.data.response.event.FilterEventResponse;
@@ -51,6 +50,23 @@ public class EventController {
 
         ResponseData<FilterEventResponse> responseData = new ResponseData<>("VIEW_EVENT_SUCCESS"
                 , "View event detail successful", response);
+
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/event/update")
+    public ResponseEntity<ResponseData<Integer>> update(@RequestBody UpdateEventRequest request) {
+        ResponseData<Integer> responseData = null;
+        int response = eventService.update(request);
+
+        if(response == -1){
+            responseData = new ResponseData<>("EVENT_DOESN'T_EXIST"
+                    , "Event doesn't exist", response);
+            return ResponseEntity.ok(responseData);
+
+        }
+        responseData = new ResponseData<>("UPDATE_EVENT_SUCCESS"
+                , "Update event successful", response);
 
         return ResponseEntity.ok(responseData);
     }
