@@ -13,5 +13,6 @@ public class UpdateAdoptionRequest {
     private String title;
     private String description;
     private String address;
+    private String petName;
     private String breed;
 }
