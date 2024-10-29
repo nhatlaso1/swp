@@ -15,6 +15,8 @@ import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,24 +110,43 @@ public class PetServiceImpl implements IPetService {
 
     @Override
     public int update(UpdateAdoptionRequest request) {
+        String username = CommonUtils.getCurrentUsername();
+        User currentUser = userRepository.findByUsername(username).get();
+
         Adoption existingAdoption = adoptionRepository.findById(request.getAdoptId())
                 .orElseThrow(() -> new RuntimeException("Adoption not found with ID: " + request.getAdoptId()));
 
-        Pet pet = null;
+        Pet pet;
         if (existingAdoption.getPet().getId() != 0) {
             pet = petRepository.findById(existingAdoption.getPet().getId())
                     .orElseThrow(() -> new RuntimeException("Pet not found with ID: " + existingAdoption.getPet().getId()));
 
             pet.setAge(request.getAge());
             pet.setBreed(request.getBreed());
-            PetType petType = petTypeRepository.findById(request.getPetTypeId()).get();
+            PetType petType = petTypeRepository.findById(request.getPetTypeId()).orElseThrow();
             pet.setPetType(petType);
             pet.setDescription(request.getDescription());
 
+            petImageRepository.deleteAllByPetId(pet.getId());
+
+            List<PetImage> newPetImages = request.getImages().stream()
+                    .map(imageUrl -> {
+                        PetImage petImage = new PetImage();
+                        petImage.setImageUrl(imageUrl);
+                        petImage.setPet(pet);
+                        return petImage;
+                    }).collect(Collectors.toList());
+
+            petImageRepository.saveAll(newPetImages);
+
             existingAdoption.setPet(pet);
+        } else {
+            pet = null;
         }
 
         existingAdoption.setTitle(request.getTitle());
+        existingAdoption.setUpdatedBy(currentUser.getId());
+        existingAdoption.setUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         existingAdoption.setPet(pet);
 
         adoptionRepository.save(existingAdoption);
@@ -133,10 +154,18 @@ public class PetServiceImpl implements IPetService {
         return 1;
     }
 
+
     @Override
     public int delete(int adoptId) {
+        Adoption adoption = adoptionRepository.findById(adoptId).orElse(null);
+
+        if (adoption == null) {
+            return -1;
+        }
+
         adoptionRepository.deleteById(adoptId);
         return 0;
     }
+
 
 }

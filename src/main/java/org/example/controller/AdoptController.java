@@ -92,10 +92,16 @@ public class AdoptController {
 
     @PostMapping("/adopt/delete")
     public ResponseEntity<ResponseData<String>> delete(@RequestParam int adoptId) {
-        petService.delete(adoptId);
+        int result = petService.delete(adoptId);
+        ResponseData<String> responseData = null;
+        if(result == -1){
+            responseData = new ResponseData<>("ADOPTION_DOESN'T_EXIST",
+                    "Adoption doesn't exist", null);
+            return ResponseEntity.ok(responseData);
+        }
 
-        ResponseData<String> responseData = new ResponseData<>("DELETE_ADOPT_SUCCESS",
-                "Delete pet adoption history successful", null);
+        responseData = new ResponseData<>("DELETE_ADOPT_SUCCESS",
+                "Delete adoption success", null);
         return ResponseEntity.ok(responseData);
     }
 

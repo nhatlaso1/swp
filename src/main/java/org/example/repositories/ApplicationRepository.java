@@ -28,7 +28,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
             "`status` = :status,\n" +
             "`updated_by` = :updatedBy,\n" +
             "`updated_at` = NOW()\n" +
-            "WHERE `id` = :id\n", nativeQuery = true)
+            "WHERE `adopt_id` = :id\n", nativeQuery = true)
     void changeStatus(@Param("status") int status,
                       @Param("updatedBy") int updateBy,
                       @Param("id") Integer id);

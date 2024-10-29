@@ -36,12 +36,15 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Integer> {
             "    a.id AS id,\n" +
             "    a.title AS title,\n" +
             "    p.name AS petName,\n" +
-            "    pt.name AS petType,\n" +
+            "    pt.id AS petType,\n" +
             "    p.age AS age,\n" +
             "    p.address AS address,\n" +
             "    u.full_name AS fullName,\n" +
             "    u.image AS profileImage,\n" +
             "    a.type AS type,\n" +
+            "    a.status AS status,\n" +
+            "    p.description AS description,\n" +
+            "    p.breed AS breed,\n" +
             "    GROUP_CONCAT(pi.image_url SEPARATOR '||') AS images\n" +
             "FROM pets p\n" +
             "JOIN adoptions a ON p.id = a.pet_id\n" +

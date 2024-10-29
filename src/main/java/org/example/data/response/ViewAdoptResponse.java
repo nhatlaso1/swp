@@ -10,7 +10,7 @@ public class ViewAdoptResponse {
     private int id;
     private String title;
     private String petName;
-    private String petType;
+    private int petType;
     private int age;
     private String address;
     private String fullName;
@@ -18,6 +18,9 @@ public class ViewAdoptResponse {
     private String type;
     private List<String> images;
     private ApplicationVO application;
+    private int status;
+    private String breed;
+    private String description;
 }
 
 

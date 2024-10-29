@@ -4,11 +4,11 @@ public interface AdoptHistoryVO {
     int getId();
     String getTitle();
     String getPetName();
-    String getPetType();
+    int getPetType();
     int getAge();
     String getAddress();
     String getFullName();
-    String getType();
+    int getType();
     String getImage();
     int getStatus();
 }

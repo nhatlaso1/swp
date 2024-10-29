@@ -8,11 +8,11 @@ public class AdoptHistoryResponse {
     private int id;
     private String title;
     private String petName;
-    private String petType;
+    private int petType;
     private int age;
     private String address;
     private String fullName;
-    private String type;
+    private int type;
     private String image;
     private int status;
 
@@ -26,11 +26,7 @@ public class AdoptHistoryResponse {
         response.setAddress(filterPetVO.getAddress());
         response.setFullName(filterPetVO.getFullName());
         response.setStatus(filterPetVO.getStatus());
-        if(filterPetVO.getType() == "1"){
-            response.setType("Nhận nuôi");
-        } else{
-            response.setType("Đem cho");
-        }
+        response.setType(filterPetVO.getType());
         response.setImage(filterPetVO.getImage());
 
         return response;
