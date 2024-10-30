@@ -12,6 +12,7 @@ import org.example.services.interfaces.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
@@ -78,20 +79,21 @@ public class EventController {
     }
 
     @PostMapping("/event/donate")
-    public ResponseEntity<ResponseData<String>> donate(@RequestBody DonateEventRequest request) throws Exception {
+    public ResponseEntity<ResponseData<String>> donate(@RequestBody DonateEventRequest donateRequest, HttpServletRequest request) throws Exception {
         ResponseData<String> responseData = null;
-        String xxx = null;
-        int response = eventService.donate(request);
+        String paymentUrl = null;
+        int response = eventService.donate(donateRequest);
 
         if(response == -1){
-            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS"
-                    , "Thanks for your donation. The event has met its target.", null);
-        }
-        else{
-            xxx = vnpayService.createPaymentUrl(request.getAmount(), "Donate", "https://pawfund-brown.vercel.app");
-            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS"
-                    , "Thanks for your donation.", xxx);
+            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
+                    "Thanks for your donation. The event has met its target.", null);
+        } else {
+            paymentUrl = vnpayService.createPaymentUrl(donateRequest.getAmount(), "Donate",
+                    "https://pawfund-brown.vercel.app", request);
+            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
+                    "Thanks for your donation.", paymentUrl);
         }
         return ResponseEntity.ok(responseData);
     }
+
 }
