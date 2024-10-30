@@ -76,6 +76,21 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public ProfileResponse getProfile(int id) {
+        User user = userRepository.findById(id).get();
+
+        ProfileResponse profile = new ProfileResponse();
+        profile.setUsername(user.getUsername());
+        profile.setFullName(user.getFullName());
+        profile.setAddress(user.getAddress());
+        profile.setPhone(user.getPhone());
+        profile.setEmail(user.getEmail());
+        profile.setImage(user.getImage());
+
+        return profile;
+    }
+
+    @Override
     public int updateProfile(UpdateProfileRequest request) {
         String currentUsername = CommonUtils.getCurrentUsername();
 

@@ -40,6 +40,7 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Integer> {
             "    p.age AS age,\n" +
             "    p.address AS address,\n" +
             "    u.full_name AS fullName,\n" +
+            "    u.phone AS phone,\n" +
             "    u.image AS profileImage,\n" +
             "    a.type AS type,\n" +
             "    a.status AS status,\n" +

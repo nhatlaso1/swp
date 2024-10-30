@@ -16,6 +16,7 @@ import org.example.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,8 +71,10 @@ public class AdoptServiceImpl implements IAdoptService {
     @Override
     public ViewAdoptResponse view(int adoptId) {
         ViewAdoptVO viewAdoptVO = adoptionRepository.view(adoptId);
-
-        List<String> imageList = Arrays.asList(viewAdoptVO.getImages().split("\\|\\|"));
+        List<String> imageList = new ArrayList<>();
+        if(viewAdoptVO != null){
+            imageList = Arrays.asList(viewAdoptVO.getImages().split("\\|\\|"));
+        }
 
         ViewAdoptResponse response = new ViewAdoptResponse();
         response.setId(viewAdoptVO.getId());
@@ -87,6 +90,7 @@ public class AdoptServiceImpl implements IAdoptService {
         response.setDescription(viewAdoptVO.getDescription());
         response.setProfileImage(viewAdoptVO.getProfileImage());
         response.setStatus(viewAdoptVO.getStatus());
+        response.setPhone(viewAdoptVO.getPhone());
 
         response.setApplication(applicationRepository.findByAdoptId(viewAdoptVO.getId()) == null
                 ? null : applicationRepository.findByAdoptId(viewAdoptVO.getId()));

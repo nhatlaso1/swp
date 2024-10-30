@@ -13,6 +13,7 @@ public interface IUserService {
     User findByUsername(String username);
     int register(RegisterRequest request);
     ProfileResponse profile();
+    ProfileResponse getProfile(int id);
     int updateProfile(UpdateProfileRequest request);
     int changePassword(ChangePasswordRequest request);
     PaginationVO<ListUserResponse> list(ListUserRequest request);

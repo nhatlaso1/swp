@@ -14,6 +14,7 @@ public class ViewAdoptResponse {
     private int age;
     private String address;
     private String fullName;
+    private String phone;
     private String profileImage;
     private String type;
     private List<String> images;

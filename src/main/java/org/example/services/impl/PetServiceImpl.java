@@ -169,7 +169,10 @@ public class PetServiceImpl implements IPetService {
         }
 
         ApplicationVO applicationVO = applicationRepository.findByAdoptId(adoptId);
-        applicationRepository.deleteById(applicationVO.getId());
+        if(applicationVO != null){
+            applicationRepository.deleteById(applicationVO.getId());
+        }
+
         adoptionRepository.deleteById(adoptId);
 
         return 0;

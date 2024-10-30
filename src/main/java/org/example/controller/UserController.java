@@ -26,6 +26,14 @@ public class UserController {
         return ResponseEntity.ok(responseData);
     }
 
+    @PostMapping("/public/profile")
+    public ResponseEntity<ResponseData<ProfileResponse>> getProfile(@RequestParam int id) {
+        ResponseData<ProfileResponse> responseData = new ResponseData<>("GET_PROFILE_SUCCESS"
+                , "Get profile successful", userService.getProfile(id));
+
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping("/profile/update")
     public ResponseEntity<ResponseData<String>> updateProfile(@RequestBody UpdateProfileRequest request) {
         userService.updateProfile(request);

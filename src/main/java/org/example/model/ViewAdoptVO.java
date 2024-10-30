@@ -14,4 +14,5 @@ public interface ViewAdoptVO {
     String getDescription();
     int getStatus();
     String getBreed();
+    String getPhone();
 }
