@@ -137,9 +137,8 @@ public class EventServiceImpl implements IEventService {
             event.setCurrentAmount(event.getCurrentAmount().add(BigDecimal.valueOf(request.getAmount())));
             if(event.getCurrentAmount().add(BigDecimal.valueOf(request.getAmount())).compareTo(event.getTargetAmount()) >= 0){
                 event.setStatus(2);
-            } else{
-                event.setStatus(3);
             }
+
             eventRepository.save(event);
             return 0;
         }
