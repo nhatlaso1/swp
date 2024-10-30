@@ -102,9 +102,31 @@ public class AdoptServiceImpl implements IAdoptService {
         Adoption newAdoption = new Adoption();
         newAdoption.setAdopterId(currentUser);
 
-        Pet pet = petRepository.findById(request.getPetId()).get();
-        pet.setStatus("Review");
-        newAdoption.setPet(pet);
+        Pet newPet = new Pet(
+                request.getName(),
+                new PetType(request.getType()),
+                request.getAge(),
+                request.getBreed(),
+                "Pending",
+                request.getDescription(),
+                request.getAddress()
+        );
+
+        Pet savedPet = petRepository.save(newPet);
+
+        if (request.getImageUrl() != null) {
+            for (String imageUrl : request.getImageUrl()) {
+                PetImage newPetImage = new PetImage();
+                newPetImage.setPet(savedPet);
+                newPetImage.setImageUrl(imageUrl);
+                newPetImage.setCreateAt(System.currentTimeMillis());
+
+                petImageRepository.save(newPetImage);
+            }
+        }
+
+        savedPet.setStatus("Review");
+        newAdoption.setPet(savedPet);
         newAdoption.setType(request.getType());
         newAdoption.setStatus(1);
         newAdoption.setStatus(AdoptionStatusEnum.REVIEW.getValue());

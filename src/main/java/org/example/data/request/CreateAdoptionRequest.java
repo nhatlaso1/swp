@@ -8,7 +8,12 @@ import java.util.List;
 public class CreateAdoptionRequest {
     private int type = 2;
     private String title;
-    private int petId;
+    private String name;
+    private int age;
+    private List<String> imageUrl;
+    private String description;
+    private String address;
+    private String breed;
 
     private String houseType;
     private int houseOwner;
