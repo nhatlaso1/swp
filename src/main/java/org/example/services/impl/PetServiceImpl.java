@@ -8,6 +8,7 @@ import org.example.data.response.AdoptHistoryResponse;
 import org.example.data.response.FilterPetResponse;
 import org.example.data.response.PaginationVO;
 import org.example.entities.*;
+import org.example.model.ApplicationVO;
 import org.example.model.FilterPetVO;
 import org.example.repositories.*;
 import org.example.services.interfaces.IPetService;
@@ -32,6 +33,8 @@ public class PetServiceImpl implements IPetService {
     private UserRepository userRepository;
     @Autowired
     private PetTypeRepository petTypeRepository;
+    @Autowired
+    private ApplicationRepository applicationRepository;
 
 
     @Override
@@ -165,7 +168,10 @@ public class PetServiceImpl implements IPetService {
             return -1;
         }
 
+        ApplicationVO applicationVO = applicationRepository.findByAdoptId(adoptId);
+        applicationRepository.deleteById(applicationVO.getId());
         adoptionRepository.deleteById(adoptId);
+        
         return 0;
     }
 
