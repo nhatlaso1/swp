@@ -73,7 +73,8 @@ public class AdoptServiceImpl implements IAdoptService {
         ViewAdoptVO viewAdoptVO = adoptionRepository.view(adoptId);
         List<String> imageList = new ArrayList<>();
         if(viewAdoptVO != null){
-            imageList = Arrays.asList(viewAdoptVO.getImages().split("\\|\\|"));
+            imageList = viewAdoptVO.getImages() == null ? null :
+                    Arrays.asList(viewAdoptVO.getImages().split("\\|\\|"));
         }
 
         ViewAdoptResponse response = new ViewAdoptResponse();
