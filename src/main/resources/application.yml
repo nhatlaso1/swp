@@ -13,21 +13,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: chintl@540hz.net
-    password: xryc vrqk hvqh cwpu
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      mail.smtp.starttls.required: true
-      mail.smtp.connectiontimeout: 5000
-      mail.smtp.timeout: 3000
-      mail.smtp.writetimeout: 5000
-server:
-  port: 8080
-
-vnpay:
-  tmnCode: "7Z1W0PPS"
-  hashSecret: "L5FTGVCGW083NCKEV7HXQ2CJO5FITNF2"
+    username: nhatminh00789@gmail.com0
+    hashSecret: "ZBF6PKFATTEWG723HD67RQ6FMKYPPFYL"
   paymentUrl: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
   returnUrl: "https://fbs.io.vn"
 
