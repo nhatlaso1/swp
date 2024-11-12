@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://petfund1.mysql.database.azure.com:3306/pawfund?useSSL=true&requireSSL=true&serverTimezone=UTC
-    username: nhatminh2001
-    password: giauhon@2024.
+    url: jdbc:mysql://103.151.239.114:3306/pawfund?useSSL=true&requireSSL=true&serverTimezone=UTC
+    username: pawfund
+    password: P@ssw0rd2024!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

@@ -82,18 +82,32 @@ public class EventController {
     public ResponseEntity<ResponseData<String>> donate(@RequestBody DonateEventRequest donateRequest, HttpServletRequest request) throws Exception {
         ResponseData<String> responseData = null;
         String paymentUrl = null;
-        int response = eventService.donate(donateRequest);
 
-        if(response == -1){
-            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
-                    "Thanks for your donation. The event has met its target.", null);
+        paymentUrl = vnpayService.createPaymentUrl(donateRequest.getAmount(), "Donate",
+                "https://pawfund-brown.vercel.app", request);
+
+        int paymentStatus = vnpayService.orderReturn(request);
+
+        if (paymentStatus == 1) {
+            int response = eventService.donate(donateRequest);
+
+            if (response == -1) {
+                responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
+                        "Thanks for your donation. The event has met its target.", null);
+            } else {
+                responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
+                        "Thanks for your donation.", paymentUrl);
+            }
+        } else if (paymentStatus == 0) {
+            responseData = new ResponseData<>("DONATE_EVENT_FAILED",
+                    "Payment was not successful. Please try again.", null);
         } else {
-            paymentUrl = vnpayService.createPaymentUrl(donateRequest.getAmount(), "Donate",
-                    "https://pawfund-brown.vercel.app", request);
-            responseData = new ResponseData<>("DONATE_EVENT_SUCCESS",
-                    "Thanks for your donation.", paymentUrl);
+            responseData = new ResponseData<>("DONATE_EVENT_ERROR",
+                    "Payment verification failed. Please contact support.", null);
         }
         return ResponseEntity.ok(responseData);
     }
+
+
 
 }
